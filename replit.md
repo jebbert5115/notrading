@@ -30,7 +30,7 @@ See the `pnpm-workspace` skill for workspace structure, TypeScript setup, and pa
 
 ### stop-trading (`artifacts/stop-trading/`)
 - React + Vite static site for the ARC Raiders "You Cannot Trade Here" page
-- Deployed to GitHub Pages at `stop-trad.ing`
+- Deployed to GitHub Pages at `no-trad.ing`
 - Two pages: Home (trading rules, humorous) + Wall of Shame (offender screenshots)
 - Discord embed meta tags set to show the attached image preview
 - GitHub Actions workflow at `.github/workflows/deploy.yml`

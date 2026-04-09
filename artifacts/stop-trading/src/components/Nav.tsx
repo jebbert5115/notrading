@@ -7,7 +7,7 @@ export default function Nav() {
     <nav className="sticky top-0 z-50 w-full border-b border-red-900/30 bg-[#0a0a0a]/90 backdrop-blur-sm">
       <div className="max-w-6xl mx-auto px-6 h-14 flex items-center justify-between">
         <a href="/" className="text-white font-black text-lg tracking-tight hover:text-red-400 transition-colors duration-200">
-          stop-trad<span className="text-red-500">.ing</span>
+          no-trad<span className="text-red-500">.ing</span>
         </a>
         <div className="flex items-center gap-6">
           <a
