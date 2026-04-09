@@ -15,8 +15,6 @@
 const offenders: { id: number; imageUrl: string; date: string; note?: string }[] = [
   // ← PASTE YOUR ENTRIES HERE
   // { id: 1, imageUrl: "https://your-image-url.png", date: "2026-04-09", note: "Optional caption" },
-  { id: 1, imageUrl: "https://cdn.discordapp.com/attachments/994366078702604390/1491934710643818496/image.png?ex=69d97ff9&is=69d82e79&hm=3752800210862990ce579984a4f62f972f98edcc1ad14dc596568184d666ce9f&", date: "2026-04-09", note: "Bro ought to read the rules." },
-  { id: 2, imageUrl: "https://cdn.discordapp.com/attachments/994366078702604390/1491935211892637756/image.png?ex=69d98071&is=69d82ef1&hm=db01416ec9b0555cdbe54e2c4bbe63429f751b2704e99f669e1f2bff3f5328a6&", date: "2026-04-09", note: "Bro ought to read the rules." },
 
 ];
 
