@@ -25,3 +25,19 @@ pnpm workspace monorepo using TypeScript. Each package manages its own dependenc
 - `pnpm --filter @workspace/api-server run dev` — run API server locally
 
 See the `pnpm-workspace` skill for workspace structure, TypeScript setup, and package details.
+
+## Artifacts
+
+### stop-trading (`artifacts/stop-trading/`)
+- React + Vite static site for the ARC Raiders "You Cannot Trade Here" page
+- Deployed to GitHub Pages at `stop-trad.ing`
+- Two pages: Home (trading rules, humorous) + Wall of Shame (offender screenshots)
+- Discord embed meta tags set to show the attached image preview
+- GitHub Actions workflow at `.github/workflows/deploy.yml`
+
+**Adding offenders to Wall of Shame:**
+Edit `artifacts/stop-trading/src/pages/WallOfShame.tsx` and add entries to the `offenders` array:
+```typescript
+{ id: 4, imageUrl: "https://your-image-url.png", date: "2026-04-09", note: "Optional caption" },
+```
+See also: `wall-of-shame-photos/README.md` for quick instructions.
