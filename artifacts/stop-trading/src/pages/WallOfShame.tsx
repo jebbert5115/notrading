@@ -1,3 +1,7 @@
+import { useState } from "react";
+import { motion, AnimatePresence } from "framer-motion";
+import AnimatedCounter from "@/components/AnimatedCounter";
+
 /**
  * WALL OF SHAME - HOW TO ADD OFFENDERS
  *
@@ -15,12 +19,74 @@
 const offenders: { id: number; imageUrl: string; date: string; note?: string }[] = [
   // ← PASTE YOUR ENTRIES HERE
   // { id: 1, imageUrl: "https://your-image-url.png", date: "2026-04-09", note: "Optional caption" },
-
 ];
 
 function formatDate(dateStr: string) {
   const d = new Date(dateStr + "T00:00:00");
   return d.toLocaleDateString("en-US", { year: "numeric", month: "short", day: "numeric" });
+}
+
+function OffenderCard({ offender, index }: { offender: typeof offenders[0]; index: number }) {
+  const [hovered, setHovered] = useState(false);
+
+  return (
+    <motion.div
+      className="break-inside-avoid rustic-card rounded overflow-hidden shame-card"
+      style={{ border: "1px solid rgba(120,40,30,0.3)" }}
+      initial={{ opacity: 0, y: 24 }}
+      animate={{ opacity: 1, y: 0 }}
+      transition={{ duration: 0.45, delay: index * 0.1, ease: [0.22, 1, 0.36, 1] }}
+      onMouseEnter={() => setHovered(true)}
+      onMouseLeave={() => setHovered(false)}
+    >
+      <div className="relative">
+        <img
+          src={offender.imageUrl}
+          alt={`Offender #${offender.id}`}
+          className="w-full object-cover"
+          loading="lazy"
+          onError={(e) => {
+            (e.target as HTMLImageElement).src =
+              "data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='400' height='200' fill='%231a1a1a'%3E%3Crect width='400' height='200'/%3E%3Ctext x='50%25' y='50%25' font-family='system-ui' font-size='14' fill='%23555' text-anchor='middle' dy='.3em'%3EImage not found%3C/text%3E%3C/svg%3E";
+          }}
+        />
+
+        {/* DENIED stamp overlay */}
+        <AnimatePresence>
+          {hovered && (
+            <motion.div
+              className="absolute inset-0 flex items-center justify-center"
+              style={{ background: "rgba(0,0,0,0.45)" }}
+              initial={{ opacity: 0 }}
+              animate={{ opacity: 1 }}
+              exit={{ opacity: 0 }}
+              transition={{ duration: 0.15 }}
+            >
+              <motion.div
+                className="denied-stamp text-3xl md:text-4xl"
+                initial={{ scale: 2.5, opacity: 0 }}
+                animate={{ scale: 1, opacity: 1 }}
+                exit={{ scale: 2, opacity: 0 }}
+                transition={{ type: "spring", stiffness: 500, damping: 22 }}
+              >
+                DENIED
+              </motion.div>
+            </motion.div>
+          )}
+        </AnimatePresence>
+      </div>
+
+      <div className="p-3 flex items-center justify-between gap-2">
+        <div className="flex items-center gap-2">
+          <span className="font-black text-xs" style={{ color: "#e01515" }}>#{offender.id}</span>
+          {offender.note && (
+            <span className="text-[#888] text-xs italic truncate">{offender.note}</span>
+          )}
+        </div>
+        <span className="text-[#555] text-xs flex-shrink-0">{formatDate(offender.date)}</span>
+      </div>
+    </motion.div>
+  );
 }
 
 export default function WallOfShame() {
@@ -30,67 +96,62 @@ export default function WallOfShame() {
     <div className="min-h-screen rustic-bg text-white relative">
       <div className="relative z-10 max-w-6xl mx-auto px-6 py-12 md:py-16">
 
-        <h1 className="text-5xl md:text-6xl font-black leading-none mb-4 tracking-tight worn-text">
+        <motion.h1
+          className="text-5xl md:text-6xl font-black leading-none mb-4 tracking-tight worn-text"
+          initial={{ opacity: 0, y: 20 }}
+          animate={{ opacity: 1, y: 0 }}
+          transition={{ duration: 0.6, ease: [0.22, 1, 0.36, 1] }}
+        >
           Wall of{" "}
-          <span className="glow-red" style={{ color: '#e01515' }}>
-            Shame
-          </span>
-        </h1>
+          <span className="glow-red" style={{ color: "#e01515" }}>Shame</span>
+        </motion.h1>
 
-        {/* Live counter */}
-        <div className="flex items-baseline gap-3 mb-3">
-          <span className="text-4xl md:text-5xl font-black tabular-nums glow-red" style={{ color: '#e01515' }}>
-            {count}
+        {/* Animated counter */}
+        <motion.div
+          className="flex items-baseline gap-3 mb-3"
+          initial={{ opacity: 0 }}
+          animate={{ opacity: 1 }}
+          transition={{ duration: 0.5, delay: 0.2 }}
+        >
+          <span
+            className="text-4xl md:text-5xl font-black tabular-nums glow-red"
+            style={{ color: "#e01515" }}
+          >
+            <AnimatedCounter target={count} />
           </span>
           <span className="text-xl text-[#888] font-semibold">
             {count === 1 ? "Offender" : "Offenders"} Logged
           </span>
-        </div>
+        </motion.div>
 
-        <div className="w-16 h-[3px] mb-10" style={{ background: 'linear-gradient(90deg, #c81e1e, transparent)' }} />
+        <div
+          className="w-16 h-[3px] mb-10"
+          style={{ background: "linear-gradient(90deg, #c81e1e, transparent)" }}
+        />
 
         {count === 0 ? (
-          <div className="flex flex-col items-center justify-center py-24 text-center">
+          <motion.div
+            className="flex flex-col items-center justify-center py-24 text-center"
+            initial={{ opacity: 0 }}
+            animate={{ opacity: 1 }}
+            transition={{ delay: 0.3 }}
+          >
             <div className="text-6xl mb-6">👀</div>
             <h2 className="text-2xl font-bold text-white mb-3 worn-text">No offenders yet...</h2>
             <p className="text-[#666] text-lg max-w-md">
               Either everyone has been behaving themselves, or the first screenshot hasn't been
               added yet. We're betting on the latter.
             </p>
-          </div>
+          </motion.div>
         ) : (
           <div className="columns-1 sm:columns-2 lg:columns-3 gap-4 space-y-4">
-            {offenders.map((offender) => (
-              <div
-                key={offender.id}
-                className="break-inside-avoid rustic-card rounded overflow-hidden shame-card"
-                style={{ border: '1px solid rgba(120,40,30,0.3)' }}
-              >
-                <img
-                  src={offender.imageUrl}
-                  alt={`Offender #${offender.id}`}
-                  className="w-full object-cover"
-                  loading="lazy"
-                  onError={(e) => {
-                    (e.target as HTMLImageElement).src =
-                      "data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='400' height='200' fill='%231a1a1a'%3E%3Crect width='400' height='200'/%3E%3Ctext x='50%25' y='50%25' font-family='system-ui' font-size='14' fill='%23555' text-anchor='middle' dy='.3em'%3EImage not found%3C/text%3E%3C/svg%3E";
-                  }}
-                />
-                <div className="p-3 flex items-center justify-between gap-2">
-                  <div className="flex items-center gap-2">
-                    <span className="font-black text-xs" style={{ color: '#e01515' }}>#{offender.id}</span>
-                    {offender.note && (
-                      <span className="text-[#888] text-xs italic truncate">{offender.note}</span>
-                    )}
-                  </div>
-                  <span className="text-[#555] text-xs flex-shrink-0">{formatDate(offender.date)}</span>
-                </div>
-              </div>
+            {offenders.map((offender, i) => (
+              <OffenderCard key={offender.id} offender={offender} index={i} />
             ))}
           </div>
         )}
 
-        <div className="mt-16 pt-8" style={{ borderTop: '1px solid rgba(120,40,30,0.2)' }}>
+        <div className="mt-16 pt-8" style={{ borderTop: "1px solid rgba(120,40,30,0.2)" }}>
           <p className="text-[#444] text-sm text-center">
             Every entry on this page is a reminder that the rules were{" "}
             <strong className="text-[#666]">right there.</strong> They were always right there.

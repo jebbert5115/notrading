@@ -1,5 +1,6 @@
 import { Switch, Route, Router as WouterRouter } from "wouter";
 import Nav from "@/components/Nav";
+import Particles from "@/components/Particles";
 import Home from "@/pages/Home";
 import WallOfShame from "@/pages/WallOfShame";
 
@@ -29,6 +30,7 @@ function Router() {
 function App() {
   return (
     <WouterRouter base={import.meta.env.BASE_URL.replace(/\/$/, "")}>
+      <Particles />
       <Nav />
       <Router />
     </WouterRouter>
