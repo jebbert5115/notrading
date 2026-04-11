@@ -29,11 +29,20 @@ function formatDate(dateStr: string) {
 }
 
 function SubmitModal({ onClose }: { onClose: () => void }) {
+  const [copied, setCopied] = useState(false);
+
   useEffect(() => {
     const handler = (e: KeyboardEvent) => { if (e.key === "Escape") onClose(); };
     document.addEventListener("keydown", handler);
     return () => document.removeEventListener("keydown", handler);
   }, [onClose]);
+
+  function copyEmail() {
+    navigator.clipboard.writeText(EMAIL).then(() => {
+      setCopied(true);
+      setTimeout(() => setCopied(false), 2000);
+    });
+  }
 
   return (
     <motion.div
@@ -84,15 +93,24 @@ function SubmitModal({ onClose }: { onClose: () => void }) {
           </p>
 
           {/* Email address */}
-          <div className="rounded p-4 space-y-1" style={{ background: "rgba(200,30,30,0.07)", border: "1px solid rgba(200,30,30,0.2)" }}>
+          <div className="rounded p-4 space-y-2" style={{ background: "rgba(200,30,30,0.07)", border: "1px solid rgba(200,30,30,0.2)" }}>
             <p className="text-xs text-[#666] uppercase tracking-widest font-semibold">Send your submission to</p>
-            <a
-              href={`mailto:${EMAIL}`}
-              className="text-xl font-black tracking-tight transition-colors duration-150 hover:text-white"
-              style={{ color: "#e01515" }}
-            >
-              {EMAIL}
-            </a>
+            <div className="flex items-center gap-3">
+              <span className="text-lg font-black tracking-tight flex-1" style={{ color: "#e01515" }}>
+                {EMAIL}
+              </span>
+              <button
+                onClick={copyEmail}
+                className="flex-shrink-0 text-xs font-bold px-3 py-1.5 rounded transition-all duration-150"
+                style={{
+                  border: "1px solid rgba(200,30,30,0.4)",
+                  color: copied ? "#4ade80" : "#e01515",
+                  background: copied ? "rgba(74,222,128,0.08)" : "rgba(200,30,30,0.1)",
+                }}
+              >
+                {copied ? "Copied!" : "Copy"}
+              </button>
+            </div>
           </div>
 
           {/* Instructions */}
@@ -123,26 +141,18 @@ function SubmitModal({ onClose }: { onClose: () => void }) {
             </div>
           </div>
 
-          {/* CTA button */}
-          <a
-            href="mailto:submissions@no-trad.ing?subject=Trader%20Caught&body=Yo%20can%20you%20add%20this%20image%20to%20the%20wall%20of%20shame%20with%20this%20note%3A%20%3CYour%20note%20(optional)%3E%0A%0A%3CWant%20to%20link%20instead%20of%20uploading%20your%20screenshot%3F%20Replace%20this%20with%20your%20publicly%20accessible%20image%20link%3E"
-            className="flex items-center justify-center gap-2 w-full py-3 rounded font-black text-sm tracking-wide transition-all duration-200"
-            style={{
-              background: "rgba(200,30,30,0.12)",
-              border: "1px solid rgba(200,30,30,0.4)",
-              color: "#e01515",
-            }}
-            onMouseEnter={e => {
-              (e.currentTarget as HTMLElement).style.background = "rgba(200,30,30,0.22)";
-              (e.currentTarget as HTMLElement).style.color = "#fff";
-            }}
-            onMouseLeave={e => {
-              (e.currentTarget as HTMLElement).style.background = "rgba(200,30,30,0.12)";
-              (e.currentTarget as HTMLElement).style.color = "#e01515";
-            }}
-          >
-            Open Email Client
-          </a>
+          <p className="text-center text-[#444] text-xs">
+            Have a desktop email app?{" "}
+            <a
+              href="mailto:submissions@no-trad.ing?subject=Trader%20Caught&body=Yo%20can%20you%20add%20this%20image%20to%20the%20wall%20of%20shame%20with%20this%20note%3A%20%3CYour%20note%20(optional)%3E%0A%0A%3CWant%20to%20link%20instead%20of%20uploading%20your%20screenshot%3F%20Replace%20this%20with%20your%20publicly%20accessible%20image%20link%3E"
+              className="underline transition-colors duration-150"
+              style={{ color: "#666" }}
+              onMouseEnter={e => { (e.currentTarget as HTMLElement).style.color = "#aaa"; }}
+              onMouseLeave={e => { (e.currentTarget as HTMLElement).style.color = "#666"; }}
+            >
+              Open in email client
+            </a>
+          </p>
 
         </div>
       </motion.div>
