@@ -80,7 +80,7 @@ function SubmitModal({ onClose }: { onClose: () => void }) {
         <div className="px-6 py-6 space-y-5 text-[#bfbfbf] text-sm leading-relaxed">
           <p>
             Witnessed someone asking to trade in the server? Good. Document it.
-            Send your screenshot to the really cool guy who runs this site and he'll add it to the Wall of Shame.
+            Send your screenshot to the really cool guy who runs this site and it will be added to the Wall of Shame.
           </p>
 
           {/* Email address */}
