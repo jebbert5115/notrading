@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { motion, AnimatePresence } from "framer-motion";
 import AnimatedCounter from "@/components/AnimatedCounter";
 
@@ -21,9 +21,136 @@ const offenders: { id: number; imageUrl: string; date: string; note?: string }[]
   // { id: 1, imageUrl: "https://your-image-url.png", date: "2026-04-09", note: "Optional caption" },
 ];
 
+const EMAIL = "submissions@no-trad.ing";
+
 function formatDate(dateStr: string) {
   const d = new Date(dateStr + "T00:00:00");
   return d.toLocaleDateString("en-US", { year: "numeric", month: "short", day: "numeric" });
+}
+
+function SubmitModal({ onClose }: { onClose: () => void }) {
+  useEffect(() => {
+    const handler = (e: KeyboardEvent) => { if (e.key === "Escape") onClose(); };
+    document.addEventListener("keydown", handler);
+    return () => document.removeEventListener("keydown", handler);
+  }, [onClose]);
+
+  return (
+    <motion.div
+      className="fixed inset-0 z-50 flex items-center justify-center px-4"
+      initial={{ opacity: 0 }}
+      animate={{ opacity: 1 }}
+      exit={{ opacity: 0 }}
+      transition={{ duration: 0.2 }}
+    >
+      {/* Backdrop */}
+      <motion.div
+        className="absolute inset-0"
+        style={{ background: "rgba(0,0,0,0.75)", backdropFilter: "blur(4px)" }}
+        onClick={onClose}
+        initial={{ opacity: 0 }}
+        animate={{ opacity: 1 }}
+        exit={{ opacity: 0 }}
+      />
+
+      {/* Panel */}
+      <motion.div
+        className="relative z-10 w-full max-w-lg rustic-card rounded-lg overflow-hidden"
+        style={{ border: "1px solid rgba(200,30,30,0.35)", boxShadow: "0 0 60px rgba(180,20,20,0.25), 0 0 0 1px rgba(120,40,30,0.2)" }}
+        initial={{ opacity: 0, scale: 0.93, y: 24 }}
+        animate={{ opacity: 1, scale: 1, y: 0 }}
+        exit={{ opacity: 0, scale: 0.95, y: 16 }}
+        transition={{ type: "spring", stiffness: 380, damping: 28 }}
+      >
+        {/* Header bar */}
+        <div className="flex items-center justify-between px-6 py-4" style={{ borderBottom: "1px solid rgba(120,40,30,0.25)" }}>
+          <h2 className="text-lg font-black text-white worn-text tracking-tight">
+            Submit an Offender
+          </h2>
+          <button
+            onClick={onClose}
+            className="text-[#555] hover:text-white transition-colors duration-150 text-xl leading-none"
+            aria-label="Close"
+          >
+            ✕
+          </button>
+        </div>
+
+        {/* Body */}
+        <div className="px-6 py-6 space-y-5 text-[#bfbfbf] text-sm leading-relaxed">
+          <p>
+            Witnessed someone asking to trade in the server? Good. Document it.
+            Send your screenshot to the moderation team and they'll add it to the Wall of Shame.
+          </p>
+
+          {/* Email address */}
+          <div className="rounded p-4 space-y-1" style={{ background: "rgba(200,30,30,0.07)", border: "1px solid rgba(200,30,30,0.2)" }}>
+            <p className="text-xs text-[#666] uppercase tracking-widest font-semibold">Send your submission to</p>
+            <a
+              href={`mailto:${EMAIL}`}
+              className="text-xl font-black tracking-tight transition-colors duration-150 hover:text-white"
+              style={{ color: "#e01515" }}
+            >
+              {EMAIL}
+            </a>
+          </div>
+
+          {/* Instructions */}
+          <div className="space-y-3">
+            <p className="text-xs text-[#555] uppercase tracking-widest font-semibold">Your email should include</p>
+
+            <div className="space-y-2">
+              <div className="flex gap-3 items-start">
+                <span className="font-black text-xs flex-shrink-0 mt-0.5" style={{ color: "#e01515" }}>01</span>
+                <div>
+                  <p className="text-white font-semibold">A screenshot of the offense</p>
+                  <p className="text-[#666] text-xs mt-0.5">
+                    Attach the image directly to the email, <span className="italic">or</span> paste a publicly accessible link
+                    (Imgur, Discord CDN, etc.) in the body.
+                  </p>
+                </div>
+              </div>
+
+              <div className="flex gap-3 items-start">
+                <span className="font-black text-xs flex-shrink-0 mt-0.5" style={{ color: "#888" }}>02</span>
+                <div>
+                  <p className="text-white font-semibold">A note <span className="text-[#555] font-normal">(optional)</span></p>
+                  <p className="text-[#666] text-xs mt-0.5">
+                    A short caption or comment to appear under the screenshot. Keep it sharp.
+                  </p>
+                </div>
+              </div>
+            </div>
+          </div>
+
+          {/* CTA button */}
+          <a
+            href={`mailto:${EMAIL}?subject=Wall%20of%20Shame%20Submission`}
+            className="flex items-center justify-center gap-2 w-full py-3 rounded font-black text-sm tracking-wide transition-all duration-200"
+            style={{
+              background: "rgba(200,30,30,0.12)",
+              border: "1px solid rgba(200,30,30,0.4)",
+              color: "#e01515",
+            }}
+            onMouseEnter={e => {
+              (e.currentTarget as HTMLElement).style.background = "rgba(200,30,30,0.22)";
+              (e.currentTarget as HTMLElement).style.color = "#fff";
+            }}
+            onMouseLeave={e => {
+              (e.currentTarget as HTMLElement).style.background = "rgba(200,30,30,0.12)";
+              (e.currentTarget as HTMLElement).style.color = "#e01515";
+            }}
+          >
+            Open Email Client
+          </a>
+
+          <p className="text-center text-[#444] text-xs">
+            All submissions are reviewed before going live. Mods reserve the right to add a better caption.
+          </p>
+        </div>
+      </motion.div>
+    </motion.div>
+  );
 }
 
 function OffenderCard({ offender, index }: { offender: typeof offenders[0]; index: number }) {
@@ -51,7 +178,6 @@ function OffenderCard({ offender, index }: { offender: typeof offenders[0]; inde
           }}
         />
 
-        {/* DENIED stamp overlay */}
         <AnimatePresence>
           {hovered && (
             <motion.div
@@ -91,20 +217,47 @@ function OffenderCard({ offender, index }: { offender: typeof offenders[0]; inde
 
 export default function WallOfShame() {
   const count = offenders.length;
+  const [showModal, setShowModal] = useState(false);
 
   return (
     <div className="min-h-screen rustic-bg text-white relative">
       <div className="relative z-10 max-w-6xl mx-auto px-6 py-12 md:py-16">
 
-        <motion.h1
-          className="text-5xl md:text-6xl font-black leading-none mb-4 tracking-tight worn-text"
-          initial={{ opacity: 0, y: 20 }}
-          animate={{ opacity: 1, y: 0 }}
-          transition={{ duration: 0.6, ease: [0.22, 1, 0.36, 1] }}
-        >
-          Wall of{" "}
-          <span className="glow-red" style={{ color: "#e01515" }}>Shame</span>
-        </motion.h1>
+        {/* Title row */}
+        <div className="flex flex-col sm:flex-row sm:items-end sm:justify-between gap-4 mb-4">
+          <motion.h1
+            className="text-5xl md:text-6xl font-black leading-none tracking-tight worn-text"
+            initial={{ opacity: 0, y: 20 }}
+            animate={{ opacity: 1, y: 0 }}
+            transition={{ duration: 0.6, ease: [0.22, 1, 0.36, 1] }}
+          >
+            Wall of{" "}
+            <span className="glow-red" style={{ color: "#e01515" }}>Shame</span>
+          </motion.h1>
+
+          <motion.button
+            onClick={() => setShowModal(true)}
+            className="flex-shrink-0 self-start sm:self-auto text-sm font-bold px-4 py-2 rounded transition-all duration-200"
+            style={{
+              border: "1px solid rgba(200,30,30,0.35)",
+              color: "#e01515",
+              background: "rgba(200,30,30,0.07)",
+            }}
+            initial={{ opacity: 0 }}
+            animate={{ opacity: 1 }}
+            transition={{ delay: 0.35 }}
+            onMouseEnter={e => {
+              (e.currentTarget as HTMLElement).style.background = "rgba(200,30,30,0.18)";
+              (e.currentTarget as HTMLElement).style.color = "#fff";
+            }}
+            onMouseLeave={e => {
+              (e.currentTarget as HTMLElement).style.background = "rgba(200,30,30,0.07)";
+              (e.currentTarget as HTMLElement).style.color = "#e01515";
+            }}
+          >
+            Submit your own →
+          </motion.button>
+        </div>
 
         {/* Animated counter */}
         <motion.div
@@ -113,10 +266,7 @@ export default function WallOfShame() {
           animate={{ opacity: 1 }}
           transition={{ duration: 0.5, delay: 0.2 }}
         >
-          <span
-            className="text-4xl md:text-5xl font-black tabular-nums glow-red"
-            style={{ color: "#e01515" }}
-          >
+          <span className="text-4xl md:text-5xl font-black tabular-nums glow-red" style={{ color: "#e01515" }}>
             <AnimatedCounter target={count} />
           </span>
           <span className="text-xl text-[#888] font-semibold">
@@ -124,10 +274,7 @@ export default function WallOfShame() {
           </span>
         </motion.div>
 
-        <div
-          className="w-16 h-[3px] mb-10"
-          style={{ background: "linear-gradient(90deg, #c81e1e, transparent)" }}
-        />
+        <div className="w-16 h-[3px] mb-10" style={{ background: "linear-gradient(90deg, #c81e1e, transparent)" }} />
 
         {count === 0 ? (
           <motion.div
@@ -159,6 +306,11 @@ export default function WallOfShame() {
         </div>
 
       </div>
+
+      {/* Submit modal */}
+      <AnimatePresence>
+        {showModal && <SubmitModal onClose={() => setShowModal(false)} />}
+      </AnimatePresence>
     </div>
   );
 }
