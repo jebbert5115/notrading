@@ -144,9 +144,6 @@ function SubmitModal({ onClose }: { onClose: () => void }) {
             Open Email Client
           </a>
 
-          <p className="text-center text-[#444] text-xs">
-            All submissions are reviewed before going live. Mods reserve the right to add a better caption.
-          </p>
         </div>
       </motion.div>
     </motion.div>
