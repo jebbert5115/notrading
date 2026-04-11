@@ -146,7 +146,7 @@ function SubmitModal({ onClose }: { onClose: () => void }) {
           <p className="text-center text-[#444] text-xs">
             Have a desktop email app?{" "}
             <a
-              href="mailto:submissions@no-trad.ing?subject=Trader%20Caught&body=Yo%20can%20you%20add%20this%20image%20to%20the%20wall%20of%20shame%20with%20this%20note%3A%20%3CYour%20note%20(optional)%3E%0A%0A%3CWant%20to%20link%20instead%20of%20uploading%20your%20screenshot%3F%20Replace%20this%20with%20your%20publicly%20accessible%20image%20link%3E"
+              href="mailto:submissions@no-trad.ing?subject=Trader%20Caught&body=%5BImage%20link%20or%20attachment%5D%0A%0A%5BCaption%20-%20optional%5D"
               className="underline transition-colors duration-150"
               style={{ color: "#666" }}
               onMouseEnter={e => { (e.currentTarget as HTMLElement).style.color = "#aaa"; }}
