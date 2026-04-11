@@ -125,7 +125,7 @@ function SubmitModal({ onClose }: { onClose: () => void }) {
 
           {/* CTA button */}
           <a
-            href={`mailto:${EMAIL}?subject=Wall%20of%20Shame%20Submission`}
+            href="mailto:submissions@no-trad.ing?subject=Trader%20Caught&body=Yo%20can%20you%20add%20this%20image%20to%20the%20wall%20of%20shame%20with%20this%20note%3A%20%3CYour%20note%20(optional)%3E%0A%0A%3CWant%20to%20link%20instead%20of%20uploading%20your%20screenshot%3F%20Replace%20this%20with%20your%20publicly%20accessible%20image%20link%3E"
             className="flex items-center justify-center gap-2 w-full py-3 rounded font-black text-sm tracking-wide transition-all duration-200"
             style={{
               background: "rgba(200,30,30,0.12)",
