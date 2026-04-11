@@ -18,8 +18,9 @@ import AnimatedCounter from "@/components/AnimatedCounter";
 
 const offenders: { id: number; imageUrl: string; date: string; note?: string }[] = [
   // ← PASTE YOUR ENTRIES HERE
+  // imgur link format: https://i.imgur.com/abc123.png
   // { id: 1, imageUrl: "https://your-image-url.png", date: "2026-04-09", note: "Optional caption" },
-  { id: 1, imageUrl: "https://imgur.com/a/wos-gBez2Ld", date: "2026-04-10", note: "We ALL know where this is going" },
+  { id: 1, imageUrl: "https://i.imgur.com/nc0VRKh.png", date: "2026-04-10", note: "We ALL know where this is going" },
 ];
 
 const EMAIL = "submissions@no-trad.ing";
