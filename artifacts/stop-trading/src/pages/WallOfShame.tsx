@@ -22,6 +22,7 @@ const offenders: { id: number; imageUrl: string; date: string; note?: string }[]
   // { id: 1, imageUrl: "https://your-image-url.png", date: "2026-04-09", note: "Optional caption" },
   { id: 1, imageUrl: "https://i.imgur.com/nc0VRKh.png", date: "2026-04-10", note: "We ALL know where this is going" },
   { id: 2, imageUrl: "https://i.imgur.com/Mrailr5.png", date: "2026-04-11", note: "No. Not for you." },
+  { id: 3, imageUrl: "https://i.imgur.com/LngofEc.png", date: "2026-04-12", note: "Nah. We're good." },
 ];
 
 const EMAIL = "submissions@no-trad.ing";
