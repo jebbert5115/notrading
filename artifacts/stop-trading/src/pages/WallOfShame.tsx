@@ -254,12 +254,6 @@ export default function WallOfShame() {
           </div>
         )}
 
-        <div className="mt-16 pt-8" style={{ borderTop: "1px solid rgba(120,40,30,0.2)" }}>
-          <p className="text-[#444] text-sm text-center">
-            Every entry on this page is a reminder that the rules were{" "}
-            <strong className="text-[#666]">right there.</strong> They were always right there.
-          </p>
-        </div>
 
       </div>
 
