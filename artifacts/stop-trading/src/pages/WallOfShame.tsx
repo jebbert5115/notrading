@@ -25,6 +25,7 @@ const offenders: { id: number; imageUrl: string; date: string }[] = [
   { id: 4, imageUrl: "https://i.imgur.com/h0Yo87L.png", date: "2026-04-14" },
   { id: 5, imageUrl: "https://i.imgur.com/ywXjBFD.png", date: "2026-04-14" },
   { id: 6, imageUrl: "https://i.imgur.com/E1FYw7l.png", date: "2026-04-15" },
+  { id: 7, imageUrl: "https://i.imgur.com/lxdDEpS.png", date: "2026-04-16" },
 ];
 
 const EMAIL = "submissions@no-trad.ing";
